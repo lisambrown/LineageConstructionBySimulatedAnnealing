@@ -1,0 +1,13 @@
+name: lineage-sa
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.13
+  - numpy
+  - matplotlib
+  - pyyaml
+  - jupyter
+  - notebook
+  - ipykernel
+  - pip

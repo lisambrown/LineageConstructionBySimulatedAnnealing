@@ -1,0 +1,146 @@
+###YAML config file for image registration and lineage tracking
+
+image_path: '/mnt/ceph/users/mavdeeva/mouse/data/from_della/YAP-miRFP_membrane_nuclei/220827/220827_stack1/Raw_data/nuclei/folder_Cam_Long_%05d.lux/klbOut_Cam_Long_%05d.lux.klb'
+
+data_path: '/mnt/ceph/users/mavdeeva/mouse/data/from_della/YAP-miRFP_membrane_nuclei/220827/220827_stack1/nuclear_segmentation/'
+name_of_embryo: 'klbOut_Cam_Long_'
+suffix_for_embryo_alternative: '.lux_SegmentationCorrected.klb'
+suffix_for_embryo: '.lux.label.klb'
+
+# Output Directory - location of registration, features, and lineage graph
+output_dir: '/Users/lbrown/Documents/projects/Mouse/Maddy/220827_stack1/'
+
+# Registeration Options
+register_begin_frame: 6 # this cannot change once set for registration (must be same for features)
+register_end_frame: 132  #
+register_file_name_prefix: code_test # prefix before _transforms.mat for registration output
+
+marker_size: 5
+marker_font_size: 10
+
+# Simulated Annealing
+simulated_annealing:
+  nepochs: 2000
+  support_split: true   # enforce balanced binary forest (splitWt > 0)
+
+  # Cost weights
+  splitWt:         8000  # penalty for unbalanced forest
+  mdDistWt:         150  # mother-daughter centroid distance
+  symWt:           2000  # division symmetry (|d1-d2|/mean)
+  angWt:            500  # division angle
+  aspWt:            100  # aspect ratio
+  meanIWt:           10  # mean intensity
+  stdIWt:             0  # std intensity (unused)
+
+  # Centroid-mismatch parameters
+  centWt:             1
+  centNoSplitWt:      8  # weight for 1-to-1 centroid distance
+  centSplitMDWt:      0  # weight for mother-daughter centroid deviation (splits)
+  centSplitDDWt:      0  # weight for daughter-daughter centroid deviation (splits)
+  centSplitMDDist:   17  # zero-cost mother-daughter distance at split
+  centSplitDDDist:   33  # zero-cost daughter-daughter distance at split
+
+  # Volume-mismatch parameters
+  volWt:              1
+  volNoSplitWt:  0.0005  # weight for 1-to-1 volume mismatch
+  volSplitWt:    0.0020  # weight for split volume mismatch
+  volNoSplitMult: 0.9    # expected daughter/mother volume ratio (1-to-1)
+  volSplitMult:   0.8    # expected sum(daughters)/mother volume ratio (split)
+
+# Simulated Annealing — 16-to-32 / 32-to-64, skip-2-frame (MOUSE_FRAME_STEP = 2)
+# Centroid distances doubled vs. every-frame config (cells move ~2× as far per step).
+# centNoSplitWt ÷4 (cost is w·d²; doubling d → 4× cost → restore balance by ÷4).
+simulated_annealing_step2:
+  nepochs: 2000
+  support_split: true
+
+  splitWt:         8000
+  mdDistWt:         150
+  symWt:           2000
+  angWt:            500
+  aspWt:            100
+  meanIWt:           10
+  stdIWt:             0
+
+  centWt:             1
+  centNoSplitWt:      2   # 8 ÷ 4  (no-split distance doubled)
+  centSplitMDWt:      0
+  centSplitDDWt:      0
+  centSplitMDDist:   34   # 17 × 2  (split mother-daughter distance doubled)
+  centSplitDDDist:   66   # 33 × 2  (daughter-daughter triangle distance doubled)
+
+  volWt:              1
+  volNoSplitWt:  0.0005
+  volSplitWt:    0.0020
+  volNoSplitMult: 0.9
+  volSplitMult:   0.8
+
+# Simulated Annealing — 8-to-16 stage
+# Run: python ComputeLineage.py -c 220827_stack1 -s 1 -e 30 --phase 8to16
+#   features frames 1–30  (= GT frames 7–36, offset by register_begin_frame=6)
+simulated_annealing_8to16:
+  nepochs: 2000
+  support_split: true
+
+  # Cost weights (From8/General_8to16.py)
+  splitWt:         4000  # lighter forest-balance penalty than 16-to-32
+  mdDistWt:         3.75 # From8: hardcoded mdDistWeight=3.75
+  symWt:            170  # From8: solWt=170 (division symmetry)
+  angWt:            575  # From8: angWt=575 (division angle)
+  aspWt:            100  # From8: symWt=100 (aspect ratio)
+  meanIWt:           10  # mean intensity
+  stdIWt:             0  # std intensity (unused)
+
+  # mdDist formula (From8 uses squared centroid distance, not Euclidean)
+  mdDistSquared:  true   # use squared distance for mdDistCost (From8 formula)
+  mdDistRef:        17   # subtract this from squared distance: cost = |sqDist - 17| when sqDist > 20
+
+  # angle cost formula (From8: angCost = |angle_rad - 156|, where 156 is in degrees but angle is in radians)
+  # since angle_rad ∈ [0,π] << 156, this effectively equals 156 - angle_rad, pushing toward 180°
+  angTarget:       156   # From8 value (156 "degrees" vs radians); default 16to32 is 156*pi/180 ≈ 2.72
+
+  # Centroid-mismatch parameters (same as 16-to-32)
+  centWt:             1
+  centNoSplitWt:      8
+  centSplitMDWt:      0
+  centSplitDDWt:      0
+  centSplitMDDist:   17
+  centSplitDDDist:   33
+
+  # Volume-mismatch parameters (same as 16-to-32)
+  volWt:              1
+  volNoSplitWt:  0.0005
+  volSplitWt:    0.0020
+  volNoSplitMult:   0.9
+  volSplitMult:     0.8
+
+# Simulated Annealing — 8-to-16 stage, skip-2-frame (MOUSE_FRAME_STEP = 2)
+simulated_annealing_8to16_step2:
+  nepochs: 20000
+  support_split: true
+
+  splitWt:         5000
+  mdDistWt:            0
+  symWt:             120
+  angWt:              20
+  aspWt:          10000
+  meanIWt:             1
+  stdIWt:              0
+
+  mdDistSquared:  false
+  angTarget:        147   # degrees → notebook converts to radians (147 * pi/180 ≈ 2.566 rad)
+  aspTarget:        2.0   # aspect ratio target for dividing mothers
+
+  centWt:              1
+  centNoSplitWt:     2.2
+  centSplitMDWt:       2
+  centSplitDDWt:       2
+  centSplitMDDist:    20
+  centSplitDDDist:    38
+
+  volWt:               0
+  volNoSplitWt:   0.0005
+  volSplitWt:      0.020
+  volNoSplitMult:    0.8
+  volSplitMult:      1.2
+

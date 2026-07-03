@@ -1,0 +1,40 @@
+# Config for Worm lineage tracking
+# Run: python ComputeLineage.py -c Worm -s <start> -e <end>
+#
+# Features cover frames 0–100.
+# GT (GroundTruth/LineageGraph.json) frames are in the same space as features
+# (register_begin_frame = 0, no offset).
+
+data_path: '../Data/Worm/'
+features_file: 'FeaturesWorm1DoubleFix0to100.json'
+
+register_begin_frame: 0
+
+simulated_annealing:
+  nepochs: 2000
+  support_split: false   # worm does not use balanced binary forest
+
+  # All division-shape costs off — worm SA is purely centroid + intensity based
+  splitWt:       0
+  mdDistWt:      0
+  symWt:         0
+  angWt:         0
+  aspWt:         0
+  meanIWt:       1
+  stdIWt:        0
+
+  # Centroid-mismatch parameters (from General_16to32_twoframe.py)
+  centWt:           1
+  centNoSplitWt:   25
+  centSplitMDWt:   30
+  centSplitDDWt:   10
+  centSplitMDDist:  2   # much smaller than mouse (worm cells are closer together)
+  centSplitDDDist:  4
+
+  # Volume-mismatch parameters
+  volWt:          1
+  volNoSplitWt:   0
+  volSplitWt:     0
+  volNoSplitMult: 0.7
+  volSplitMult:   1.3
+
