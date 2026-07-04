@@ -346,8 +346,6 @@ def validateNucCounts (nucCounts, supportSplit = True):   # helper function
             precCount = nc
             if  nc == nextPow:
                 nextPow *= 2
-        if  intLogTwo (nc) is None:                                  # last nucCount not a power of two
-            return  False
         return  True
     else:                                                            # just validate n-to-2n constraint
         for  i in range (1, len (nucCounts)):
