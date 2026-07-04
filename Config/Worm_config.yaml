@@ -6,7 +6,7 @@
 # (register_begin_frame = 0, no offset).
 
 data_path: '../Data/Worm/'
-features_file: 'FeaturesWorm1DoubleFix0to100.json'
+features_file: 'Features.json'
 
 register_begin_frame: 0
 
