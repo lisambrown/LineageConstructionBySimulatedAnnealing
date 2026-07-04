@@ -121,7 +121,7 @@ def plot_division(frame_t, edges_t, centroids, feat_offset, out_path, config_nam
         parent_kids[src[1]].append(dst[1])
     n_div = sum(1 for kids in parent_kids.values() if len(kids) >= 2)
 
-    fig = plt.figure(figsize=(8, 6))
+    fig = plt.figure(figsize=(14, 10))
     ax = fig.add_subplot(111, projection="3d")
 
     # Frame t — blue
