@@ -2,14 +2,14 @@
 
 <table>
   <tr>
-    <td align="center"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_initial.png" alt="Initial state" width="100%"></a></td>
-    <td align="center"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_intermediate.png" alt="Intermediate state" width="100%"></a></td>
-    <td align="center"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_final.png" alt="Final state" width="100%"></a></td>
+    <td align="center" width="33%"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_initial.png" alt="Initial state" width="280"></a></td>
+    <td align="center" width="33%"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_intermediate.png" alt="Intermediate state" width="280"></a></td>
+    <td align="center" width="33%"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_final.png" alt="Final state" width="280"></a></td>
   </tr>
   <tr>
-    <td align="center"><b>Initial</b></td>
-    <td align="center"><b>Intermediate</b></td>
-    <td align="center"><b>Final</b></td>
+    <td align="center" width="33%"><b>Initial</b></td>
+    <td align="center" width="33%"><b>Intermediate</b></td>
+    <td align="center" width="33%"><b>Final</b></td>
   </tr>
 </table>
 
