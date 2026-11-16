@@ -1,5 +1,20 @@
 # Track-a-Tree: Cell Lineage Construction by Simulated Annealing
 
+<table>
+  <tr>
+    <td align="center"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_initial.png" alt="Initial state" width="100%"></a></td>
+    <td align="center"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_intermediate.png" alt="Intermediate state" width="100%"></a></td>
+    <td align="center"><a href="https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html"><img src="docs/lineage_final.png" alt="Final state" width="100%"></a></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Initial</b></td>
+    <td align="center"><b>Intermediate</b></td>
+    <td align="center"><b>Final</b></td>
+  </tr>
+</table>
+
+**[▶ Watch the annealing animation](https://users.flatironinstitute.org/~awatters/animated_lineage/tracks.html)**
+
 Track-a-Tree reconstructs cell lineage trees from time-lapse fluorescence microscopy by globally optimizing a cost function over all parent-daughter assignments using simulated annealing. Unlike greedy frame-by-frame tracking, the global optimization correctly handles the case where multiple divisions occur between consecutive frames — a common situation in early embryo imaging at low frame rates.
 
 The method is applied to two model systems:
